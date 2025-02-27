@@ -1,0 +1,604 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Building Site CCTV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+        }
+        .nav-item::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #f97316;
+            transition: width .3s;
+        }
+        .active::after {
+            width: 100%;
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .hover-effect:hover .icon, .hover-effect:hover .text {
+            color: white !important;
+        }
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .image-container img {
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .image-container:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.7);
+        }
+        .image-container .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 1rem;
+            transition: background 0.3s ease;
+        }
+        .image-container:hover .overlay {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-orange-600 text-white text-center py-2 text-sm">
+        <p>Save 10% on First Purchase + Building Site CCTV Systems Ready - Click Here to Order Now</p>
+    </header>
+    <!-- Sticky Navbar -->
+    <nav class="relative shadow-md z-50" id="navbar">
+        <div class="container mx-auto flex justify-between items-center py-2 px-6">
+            <div class="flex items-center">
+                <img alt="Building Site CCTV Logo" class="h-30" height="100" src="images/logo.png" width="100"/>
+                <span class="ml-2 text-2xl font-bold">Building Site CCTV</span>
+            </div>
+            <div class="md:hidden">
+                <button class="text-gray-700 focus:outline-none" id="menu-btn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <ul class="hidden md:flex space-x-6" id="menu">
+                <li><a class="text-black hover:text-orange-600 nav-item active" href="index.html">Home</a></li>
+                <li><a class="text-black hover:text-orange-600 nav-item" href="about-us.html">About Us</a></li>
+                <li><a class="text-black hover:text-orange-600 nav-item" href="our-system.html">Our System</a></li>
+                <li><a class="text-black hover:text-orange-600 nav-item" href="resources.html">Resources</a></li>
+                <li><a class="text-black hover:text-orange-600 nav-item" href="blog.html">Blog</a></li>
+                <li><a class="hidden text-black hover:text-orange-600 nav-item" href="shop.html">Shop</a></li>
+            </ul>
+            <a class="hidden md:block bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 transition duration-300" href="contact-us.html">Contact Us</a>
+        </div>
+        <div class="hidden md:hidden" id="mobile-menu">
+            <ul class="flex flex-col space-y-4 p-4">
+                <li><a class="text-black hover:text-orange-600 nav-item active" href="index.html">Home</a></li>
+                <li><a class="text-black hover:text-orange-600 nav-item" href="about-us.html">About Us</a></li>
+                <li><a class="text-black hover:text-orange-600 nav-item" href="our-system.html">Our System</a></li>
+                <li><a class="text-black hover:text-orange-600 nav-item" href="resources.html">Resources</a></li>
+                <li><a class="text-black hover:text-orange-600 nav-item" href="blog.html">Blog</a></li>
+                <li><a class="hidden text-black hover:text-orange-600 nav-item" href="shop.html">Shop</a></li>
+                <li><a class="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 transition duration-300" href="contact-us.html">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="relative bg-cover bg-center h-[80%] " data-aos="fade-up">
+        <img alt="A construction site with CCTV cameras installed" class="absolute inset-0 w-full h-full object-cover " height="600" src="https://storage.googleapis.com/a1aa/image/Zpnv_FmpICVXKvykp0PM6JNPKpVMENpQK2FzGqYKDA8.jpg" width="1920"/>
+        <div class="absolute inset-0 bg-black  opacity-50"></div>
+        <div class="container mx-auto relative z-10 text-center text-white pt-48 ">
+            <h1 class="text-4xl font-bold">PROTECT YOUR <span class="text-orange-600">SITE</span> TODAY</h1>
+            <p class="mt-4">Hire a 4G Solar CCTV System from $45.00 per Week or Purchase from $2300 Outright</p>
+            <p class="mt-2 text-2xl">Ph: 1300 638 632</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="bg-white">
+        <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 text-center gap-4 p-4">
+            <div class="bg-gray-200 hover:bg-orange-600 p-4 rounded transition duration-300 py-8 hover-effect" data-aos="fade-up">
+                <i class="fas fa-video text-4xl text-orange-600 icon"></i>
+                <p class="mt-2 text">24/7 Site Monitoring</p>
+            </div>
+            <div class="bg-gray-200 hover:bg-orange-600 p-4 rounded transition duration-300 py-8 hover-effect" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-shield-alt text-4xl text-orange-600 icon"></i>
+                <p class="mt-2 text">Site Protection</p>
+            </div>
+            <div class="bg-gray-200 hover:bg-orange-600 p-4 rounded transition duration-300 py-8 hover-effect" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-tools text-4xl text-orange-600 icon"></i>
+                <p class="mt-2 text">Easy Set Up Options</p>
+            </div>
+            <div class="bg-gray-200 hover:bg-orange-600 p-4 rounded transition duration-300 py-8 hover-effect" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-solar-panel text-4xl text-orange-600 icon"></i>
+                <p class="mt-2 text">Portable Solutions</p>
+            </div>
+        </div>
+    </section>
+    <!-- News Section -->
+    <section class="bg-gray-100 py-8">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-6" data-aos="fade-up">Latest News</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-4 rounded shadow-md" data-aos="fade-up">
+                    <img alt="News item 1 image showing a new CCTV installation at a construction site" class="w-full h-48 object-cover rounded" height="200" src="https://storage.googleapis.com/a1aa/image/1zVu2LUAsFC7sk-T59gzClW6L8lZ5CnPY6CdjbpP5Wo.jpg" width="300"/>
+                    <h3 class="text-xl font-bold mt-4">New CCTV Installation at Downtown Site</h3>
+                    <p class="mt-2 text-gray-600">We have recently installed a new CCTV system at a major downtown construction site to enhance security and monitoring.</p>
+                </div>
+                <div class="bg-white p-4 rounded shadow-md" data-aos="fade-up" data-aos-delay="100">
+                    <img alt="News item 2 image showing a team of engineers working on a CCTV system" class="w-full h-48 object-cover rounded" height="200" src="https://storage.googleapis.com/a1aa/image/1YstWElPMwZpCsZO62B-HnPHqV3Ek-K1Kwjli-F-AE4.jpg" width="300"/>
+                    <h3 class="text-xl font-bold mt-4">Team of Engineers Enhancing System Capabilities</h3>
+                    <p class="mt-2 text-gray-600">Our team of engineers is constantly working to enhance the capabilities of our CCTV systems to provide better security solutions.</p>
+                </div>
+                <div class="bg-white p-4 rounded shadow-md" data-aos="fade-up" data-aos-delay="200">
+                    <img alt="News item 3 image showing a solar-powered CCTV camera" class="w-full h-48 object-cover rounded" height="200" src="https://storage.googleapis.com/a1aa/image/i6aCRvS59On16E_XRfKVRo-lCK3XcW4KaqCwoK-T7Pk.jpg" width="300"/>
+                    <h3 class="text-xl font-bold mt-4">Introduction of Solar-Powered CCTV Cameras</h3>
+                    <p class="mt-2 text-gray-600">We are excited to introduce our new range of solar-powered CCTV cameras, offering sustainable and reliable security solutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+	  <!-- Security & Management Section -->
+  <section class="bg-gray-100 py-16" data-aos="fade-up">
+   <div class="container mx-auto flex flex-wrap">
+    <div class="w-full md:w-1/2 p-4" data-aos="fade-right">
+     <img alt="Person holding a phone showing CCTV footage" class="rounded shadow-md h-[500px] w-[700px]"  src="https://storage.googleapis.com/a1aa/image/pLqIFy45Dm_kCkWisn68Ts8-6p3F4YcfOwU6o2AM3YE.jpg" />
+    </div>
+    <div class="w-full md:w-1/2 p-4" data-aos="fade-left">
+     <h2 class="text-4xl font-bold mb-4">
+      SECURITY &amp; MANAGEMENT
+     </h2>
+	 <div class="w-[100px] h-[5px] bg-orange-600 display-block pd-16"></div> <br>
+     <p class="text-xl mb-4">
+      Building Site CCTV provides real-time access to CCTV systems that allow clients and site managers to view your site remotely from any device with an internet connection.
+     </p>
+     <ul class="space-y-2 mb-4">
+      <li class="flex items-center text-xl">
+       <i class="fas fa-check-square text-green-500 mr-2"></i>
+       Building Site CCTV can be set up as a permanent or temporary solution
+      </li>
+      <li class="flex items-center text-xl">
+       <i class="fas fa-check-square text-green-500 mr-2"></i>
+       Our systems are solar powered and can be deployed in any location
+      </li>
+      <li class="flex items-center text-xl">
+       <i class="fas fa-check-square text-green-500 mr-2"></i>
+       High resolution cameras with night vision capabilities
+      </li>
+      <li class="flex items-center text-xl">
+       <i class="fas fa-check-square text-green-500 mr-2"></i>
+       24/7 monitoring and recording
+      </li>
+      <li class="flex items-center text-xl">
+       <i class="fas fa-check-square text-green-500 mr-2"></i>
+       Mobile app access for live viewing and playback
+      </li>
+     </ul>
+     <p class="text-xl">
+      The Building Site CCTV system is designed to be simple, reliable and transportable.
+     </p>
+    </div>
+   </div>
+  </section>
+  <!-- About Section -->
+  <section class="bg-white py-16" data-aos="fade-up" id="about-us">
+   <div class="container mx-auto flex flex-wrap">
+    <div class="w-full md:w-1/2 p-4" data-aos="fade-right">
+     <h2 class="text-4xl font-bold mb-4">
+      ABOUT OUR SITE CCTV
+     </h2>
+	 <div class="w-[100px] h-[5px] bg-orange-600 display-block pd-16"></div> <br>
+     <p class="text-xl mb-4">
+      The Building Site CCTV system is a high resolution solar powered camera system designed to provide builders with the ability to monitor their sites 24 hours a day, 7 days a week.
+     </p>
+     <p class="text-xl mb-4">
+      This system was designed and developed by Building Site CCTV owner Jim Gallagher who has been installing security CCTV &amp; Access Control Systems for a number of Melbourne based builders and trade professionals.
+     </p>
+	 <div class="mt-36">
+     <a class="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 transition duration-300 text-xl " data-aos="zoom-in" href="#">
+      Learn More
+     </a>
+	 </div>
+    </div>
+    <div class="w-full md:w-1/2 p-4" data-aos="fade-left">
+     <img alt="Solar powered CCTV camera" class="rounded shadow-md h-[500px] w-[700px]" src="https://storage.googleapis.com/a1aa/image/Zy2Q0Xku7IB1EEvpxUHQBzCro01goHZe74xMxrzXV_k.jpg" />
+    </div>
+   </div>
+  </section>
+  
+  <!-- Construction -->
+  <section class="bg-gray-100 py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">INDUSTRIES</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+                <!-- Construction -->
+                <div class="image-container" data-aos="fade-up">
+                    <img alt="Construction industry with cranes and building structures"  height="400" src="https://storage.googleapis.com/a1aa/image/r6xvp9qClaApWY0BUbg4cAfEwfj5r3PBYbVBPsHywv0.jpg" width="600"/>
+                    <div class="overlay flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-white">CONSTRUCTION</h3>
+                        <a class="bg-white text-black px-4 py-2  hover:bg-gray-200 transition duration-300" href="#">Learn More</a>
+                    </div>
+                </div>
+                <!-- Civil -->
+                <div class="image-container" data-aos="fade-up" data-aos-delay="100">
+                    <img alt="Civil industry with road construction and infrastructure"  height="400" src="https://storage.googleapis.com/a1aa/image/fnDS_9KCzeAGmz2RF_3Tf-_RuiFSOwNAvLedyTe4V6Y.jpg" width="600"/>
+                    <div class="overlay flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-white">CIVIL</h3>
+                        <a class="bg-white text-black px-4 py-2  hover:bg-gray-200 transition duration-300" href="#">Learn More</a>
+                    </div>
+                </div>
+                <!-- Commercial -->
+                <div class="image-container" data-aos="fade-up" data-aos-delay="200">
+                    <img alt="Commercial industry with office buildings and business centers"  height="400" src="https://storage.googleapis.com/a1aa/image/g6xfbk7_ITjtJURR3V5gGvRZa2ZgpeAEvCmO_XRCb_o.jpg" width="600"/>
+                    <div class="overlay flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-white">COMMERCIAL</h3>
+                        <a class="bg-white text-black px-4 py-2  hover:bg-gray-200 transition duration-300" href="#">Learn More</a>
+                    </div>
+                </div>
+                <!-- Land Developers -->
+                <div class="image-container" data-aos="fade-up" data-aos-delay="300">
+                    <img alt="Land developers industry with plots and land development projects"  height="400" src="https://storage.googleapis.com/a1aa/image/d-2BcMD1_uTRQ6toCrt2yMVUXXs8eAqsYkEK8vKFNKU.jpg" width="600"/>
+                    <div class="overlay flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-white">LAND DEVELOPERS</h3>
+                        <a class="bg-white text-black px-4 py-2  hover:bg-gray-200 transition duration-300" href="#">Learn More</a>
+                    </div>
+                </div>
+                <!-- Government -->
+                <div class="image-container" data-aos="fade-up" data-aos-delay="400">
+                    <img alt="Government industry with public infrastructure and government buildings" height="400" src="https://storage.googleapis.com/a1aa/image/9AqZgVNsgo54uVGR3dxTsz-3WNpM2I5HAlndvJfxWg0.jpg" width="600"/>
+                    <div class="overlay flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-white">GOVERNMENT</h3>
+                        <a class="bg-white text-black px-4 py-2  hover:bg-gray-200 transition duration-300" href="#">Learn More</a>
+                    </div>
+                </div>
+                <!-- Residential -->
+                <div class="image-container" data-aos="fade-up" data-aos-delay="500">
+                    <img alt="Residential industry with housing projects and residential buildings"  height="400" src="https://storage.googleapis.com/a1aa/image/SXnqcbls5fMoBUV6U1O6xXGFx3qCbrksz_zZ-lK_iiU.jpg" width="600"/>
+                    <div class="overlay flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-white">RESIDENTIAL</h3>
+                        <a class="bg-white text-black px-4 py-2  hover:bg-gray-200 transition duration-300" href="#">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Stats Section -->
+<section class="bg-blue-900 text-white py-16" id="counter-section">
+    <div class="container mx-auto text-center">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div data-aos="fade-up">
+                <h3 class="text-4xl font-bold" id="systems-deployed">0</h3>
+                <p class="mt-2">Systems Deployed</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-4xl font-bold" id="sites-protected">0</h3>
+                <p class="mt-2">Current Sites Protected</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-4xl font-bold" id="awards">0</h3>
+                <p class="mt-2">Awards</p>
+            </div>
+        </div>
+    </div>
+</section>
+     <!-- Gallery Section -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8" data-aos="fade-up">Gallery</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <img alt="CCTV camera with solar panel installed on a pole" class="rounded mb-4" height="400" src="https://storage.googleapis.com/a1aa/image/74hwhtjHu5OYXuUDecEVfeVZCwCZ5YL2jy9LGROIcj8.jpg" width="600"/>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <img alt="CCTV camera with solar panel" class="rounded mb-4" height="400" src="https://storage.googleapis.com/a1aa/image/dNvI-bASOVcy6ONZMfw0-G5YFlW0YE_dXGCSFq7ROME.jpg" width="600"/>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <img alt="Close-up of a CCTV camera with solar panel" class="rounded mb-4" height="400" src="https://storage.googleapis.com/a1aa/image/rc9WDeqAG6PDUeoyZCaiCGAR_fdLjtGy3b7cBbZmZEU.jpg" width="600"/>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="400">
+                    <img alt="CCTV camera with solar panel on a construction site" class="rounded mb-4" height="400" src="https://storage.googleapis.com/a1aa/image/B1gxxvMcIMRGQWFpbKxP-0bZGmzOLNCFnxRDKGq38CI.jpg" width="600"/>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="500">
+                    <img alt="CCTV camera with solar panel monitoring a site" class="rounded mb-4" height="400" src="https://storage.googleapis.com/a1aa/image/tWvw7e4pvQrQerGZGHEFM2LvPeldKAxuEVOrSMQQ1D4.jpg" width="600"/>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="600">
+                    <img alt="CCTV camera with solar panel and night vision" class="rounded mb-4" height="400" src="https://storage.googleapis.com/a1aa/image/vY_GwmrxsZYiHLWTlHuvgG-KKCko36sG-TpGsTJkMdI.jpg" width="600"/>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Key Features Section -->
+    <section class="bg-gray-200 py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8" data-aos="fade-up">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded shadow" data-aos="fade-right" data-aos-delay="100">
+                    <h3 class="text-2xl font-bold mb-4">Booking System</h3>
+                    <p>Our website incorporates a booking system for customers to easily schedule our services. Simply choose your desired service and time, and we'll take care of the rest.</p>
+                    <button class="mt-4 px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700" onclick="openModal('bookingModal')">Book Now</button>
+                </div>
+                <div class="bg-white p-8 rounded shadow" data-aos="fade-left" data-aos-delay="100">
+                    <h3 class="text-2xl font-bold mb-4">Contact Form</h3>
+                    <p>Have any inquiries? Use our contact form to reach out to us. We're here to help with any questions or concerns you may have.</p>
+                    <button class="mt-4 px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700" onclick="openModal('contactModal')">Contact Us</button>
+                </div>
+            </div>
+        </div>
+    </section>
+	<!-- Booking Modal -->
+  <div class="modal" id="bookingModal">
+   <div class="modal-content">
+    <span class="close" onclick="closeModal('bookingModal')">&times;</span>
+    <h2 class="text-2xl font-bold mb-4">Book a Service</h2>
+    <form>
+     <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="service">Service</label>
+      <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="service" name="service">
+       <option>24/7 Site Monitoring</option>
+       <option>Site Protection</option>
+       <option>Easy Set Up Options</option>
+       <option>Portable Solutions</option>
+      </select>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="date">Date</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="date" name="date" type="date"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="time">Time</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="time" name="time" type="time"/>
+     </div>
+     <button class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+      Submit
+     </button>
+    </form>
+   </div>
+  </div>
+  <!-- Contact Modal -->
+  <div class="modal" id="contactModal">
+   <div class="modal-content">
+    <span class="close" onclick="closeModal('contactModal')">&times;</span>
+    <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
+    <form>
+     <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email"/>
+     </div>
+     <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="message">Message</label>
+      <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" name="message" rows="4"></textarea>
+     </div>
+     <button class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+      Submit
+     </button>
+    </form>
+   </div>
+  </div>
+    <!-- Google Map Section -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8" data-aos="fade-up">Our Location</h2>
+            <div class="w-full h-96" data-aos="zoom-in">
+			
+ <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28613675.636076488!2d111.81506548369659!3d-24.52185736858822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2b2bfd076787c5df%3A0x538267a1955b1352!2sAustralia!5e1!3m2!1sen!2sbd!4v1740688107557!5m2!1sen!2sbd"  height="450" style="border:0; width:100%" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>         
+			</div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <img alt="Building Site CCTV Logo" class="" height="100" src="images/logo.png" width="100"/>
+                    <span class="ml-2 text-xl font-bold">Building Site CCTV</span>
+                </div>
+
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Our Services</h3>
+                    <ul>
+                        <li><a class="hover:text-orange-600" href="#">24/7 Site Monitoring</a></li>
+                        <li><a class="hover:text-orange-600" href="#">Site Protection</a></li>
+                        <li><a class="hover:text-orange-600" href="#">Easy Set Up Options</a></li>
+                        <li><a class="hover:text-orange-600" href="#">Portable Solutions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <p>Email: info@buildingsitecctv.com</p>
+                    <p>Phone: 1300 638 632</p>
+					<br>
+						<div class="flex space-x-4 justify-center">
+                    <a class="hover:text-orange-600" href="#">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="hover:text-orange-600" href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="hover:text-orange-600" href="#">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="hover:text-orange-600" href="#">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+                </div>
+			
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul>
+                        <li><a class="hover:text-orange-600" href="#">About Us</a></li>
+                        <li><a class="hover:text-orange-600" href="#">Privacy Policy</a></li>
+                        <li><a class="hover:text-orange-600" href="#">Terms of Service</a></li>
+                        <li><a class="hover:text-orange-600" href="#">FAQs</a></li>
+                    </ul>
+                </div>
+				
+            </div>
+            <div class="text-center mt-6">
+    <p>
+     Powered by
+     <a class="text-orange-600 hover:underline" href="#">
+      Energis
+     </a>
+     | Designed by
+     <a class="text-orange-600 hover:underline" href="#">
+      Studio1Design
+     </a>
+    </p>
+    <p>
+     Copyright © 2019 Building Site CCTV
+    </p>
+   </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+    AOS.init();
+
+    // Sticky Header Logic
+    const navbar = document.getElementById('navbar');
+    const stickyOffset = navbar.offsetTop;
+
+    window.onscroll = () => {
+        if (window.pageYOffset >= stickyOffset) {
+            navbar.classList.add('sticky');
+        } else {
+            navbar.classList.remove('sticky');
+        }
+    };
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Number Animation Logic
+    function animateValue(id, start, end, duration) {
+        const obj = document.getElementById(id);
+        const range = end - start;
+        const minTimer = 50;
+        const stepTime = Math.abs(Math.floor(duration / range));
+        const startTime = new Date().getTime();
+        const endTime = startTime + duration;
+        let timer;
+
+        function run() {
+            const now = new Date().getTime();
+            const remaining = Math.max((endTime - now) / duration, 0);
+            const value = Math.round(end - (remaining * range));
+            obj.innerHTML = value + '+';
+            if (value == end) {
+                clearInterval(timer);
+            }
+        }
+
+        timer = setInterval(run, stepTime);
+        run();
+    }
+
+    // Improved Visibility Check
+    function isElementInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.bottom >= 0
+        );
+    }
+
+    function onVisibilityChange(el, callback) {
+        let triggered = false;
+        return function () {
+            if (!triggered && isElementInViewport(el)) {
+                triggered = true;
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            }
+        };
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const counterSection = document.getElementById('counter-section');
+        const handler = onVisibilityChange(counterSection, function () {
+            animateValue("systems-deployed", 0, 200, 2000);
+            animateValue("sites-protected", 0, 200, 2000);
+            animateValue("awards", 0, 17, 2000);
+        });
+
+        window.addEventListener('scroll', handler);
+        handler(); // Initial check in case the element is already in view
+    });
+	
+	
+	
+	
+	
+	
+	
+	function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+</script>
+</body>
+</html>
